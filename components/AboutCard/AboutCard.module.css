@@ -1,0 +1,36 @@
+.admin {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 12px;
+
+  /* identical to box height */
+  text-align: justify;
+
+  color: #b1b1b1;
+  margin: 0.5rem 0;
+}
+
+.infoTextPair {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 35px;
+}
+
+.infoTextPair > p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 13px;
+  line-height: 15px;
+
+  /* identical to box height */
+  text-align: justify;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

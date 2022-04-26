@@ -9,8 +9,7 @@ const Home: NextPage = () => {
     <div className={``}>
       <div className={`flex flex-col w-full justify-center items-center`}>
         <Logo className="my-10" variant={LogoVariants.Header} />
-        <AboutCard />
-        <SignIn className="mt-3 px-3 py-2" />
+
         <Footer />
       </div>
     </div>
