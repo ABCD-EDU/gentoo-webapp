@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         varela: "'Varela Round', sans-serif",
         urbanist: "'Urbanist', sans-serif",
+        inter: "'Inter', sans-serif",
       },
     },
   },

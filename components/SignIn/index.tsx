@@ -3,13 +3,8 @@ import { Icon } from "@iconify/react";
 import { Button } from "@mui/material";
 import { getAPIRoute } from "../../tags/apiRoutes";
 import Link from "next/link";
-import axios from "axios";
 
 const SignIn = ({ className }: { className?: string }) => {
-  const signIn = async () => {
-    // window.link
-  };
-
   return (
     <div
       className={`w-[95%] sm:w-[442px] bg-[#353B48] shadow-sm rounded-sm ${className}`}
@@ -19,7 +14,6 @@ const SignIn = ({ className }: { className?: string }) => {
       <Link href={`${getAPIRoute().SignIn}`}>
         <a>
           <Button
-            onClick={signIn}
             style={{
               width: "100%",
               alignItems: "center",

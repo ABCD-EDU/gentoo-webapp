@@ -49,7 +49,10 @@ const Footer = ({ className }: { className?: string }) => {
         {footerLinks.map((e) => (
           <>
             {e.name === "WHAT IS GENTOO?" ? (
-              <div className="hidden lg:flex flex-col justify-center items-center mt-5">
+              <div
+                key={e.name}
+                className="hidden lg:flex flex-col justify-center items-center mt-5"
+              >
                 <span className="font-varela text-[#9C9C9C]">
                   WHAT IS GENTOO?
                 </span>
