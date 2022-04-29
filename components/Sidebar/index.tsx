@@ -10,15 +10,18 @@ const Sidebar: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [photo, setPhoto] = useState<string>("");
+  const [userId, setUserId] = useState<number>(0);
 
   useEffect(() => {
     const _username = localStorage.getItem("username");
     const _email = localStorage.getItem("email");
     const _photo = localStorage.getItem("photo");
+    const _userId = localStorage.getItem("userId");
 
     setUsername(_username ? _username : "");
     setEmail(_email ? _email : "");
     setPhoto(_photo ? _photo : "");
+    setUserId(_userId ? parseInt(_userId) : 0);
   });
 
   const createLink = (path: string, name: string, icon: string) => {
@@ -53,9 +56,9 @@ const Sidebar: NextPage = () => {
           {createLink("/home", "Profile", "ant-design:user-outlined")}
         </div>
       </div>
-      <Link href={`/profile/${0}`}>
+      <Link href={`/profile/${userId}`}>
         <a>
-          <Button variant={`text`} className={`rounded-full w-[120%]`}>
+          <Button variant={`text`} className={`rounded-full `}>
             <div className={"flex flex-row items-center"}>
               <div
                 className="

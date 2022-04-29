@@ -10,7 +10,7 @@ const PostForm = () => {
   const [rows, setRows] = useState<number>(1);
 
   const handleContentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let newContent = e.target.value;
+    const newContent = e.target.value;
     let rows = newContent.split("\n").length + 1;
 
     /**

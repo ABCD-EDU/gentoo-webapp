@@ -52,6 +52,11 @@ const Home: NextPage = () => {
       username: username,
       google_photo: googlePhoto,
       description: about,
+      birthdate: {
+        day: day,
+        month: month,
+        year: year,
+      },
     };
 
     axios
@@ -60,10 +65,10 @@ const Home: NextPage = () => {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
+      .then(() => {
         router.push("/home");
       })
-      .catch((err) => {
+      .catch(() => {
         setError(true);
       });
   };
@@ -77,26 +82,29 @@ const Home: NextPage = () => {
         if (registered) {
           router.push("/home");
         }
-        if (token) {
-          axios
-            .get(
-              `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${authToken}`
-            )
-            .then((res) => {
-              const { email, picture } = res.data;
-              setEmail(email);
-              setGooglePhoto(picture);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
       })
       .catch((err) => {
         router.push("/");
         console.log(err);
       });
   });
+
+  useEffect(() => {
+    if (authToken !== "") {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${authToken}`
+        )
+        .then((res) => {
+          const { email, picture } = res.data;
+          setEmail(email);
+          setGooglePhoto(picture);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [authToken]);
 
   const createDateSelector = (
     inputChange: ChangeEventHandler<HTMLSelectElement> | undefined,
