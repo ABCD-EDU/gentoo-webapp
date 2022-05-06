@@ -63,7 +63,10 @@ const Footer = ({ className }: { className?: string }) => {
                 key={e.name}
                 className="flex flex-col justify-center items-center mt-5"
               >
-                <span className="font-urbanist font-bold text-[#9C9C9C]">
+                <span
+                  key={e.name}
+                  className="font-urbanist font-bold text-[#9C9C9C]"
+                >
                   {e.name}
                 </span>
                 {e.links.map((e) => (
