@@ -5,8 +5,8 @@ import styles from "./ReportsTable.module.css";
 const ReportsTable = () => {
   const userReport1 = {
     userID: 1,
-    username: "hotdog",
-    email: "hotdog@mail.com",
+    username: "hotdogasdfasdfas",
+    email: "hotdosdfasdfasdfg@mail.com",
     photo: "",
     totalPosts: 69,
     reports: 13,

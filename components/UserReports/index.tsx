@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import styles from "./UserReports.module.css";
 
 export interface UserReportsProps {
@@ -55,7 +55,9 @@ const UserReports: FC<UserReportsProps> = ({
         {/*User info container*/}
         <div className={styles.userInfoContainer}>
           <p className={styles.username}>{username}</p>
-          <p className={styles.email}>{email}</p>
+          <Tooltip title={email}>
+            <p className={styles.email}>{email}</p>
+          </Tooltip>
           <p className={styles.totalPosts}>{totalPosts}</p>
         </div>
       </div>
