@@ -43,5 +43,8 @@
       "npx eslint --ignore-pattern $(git diff --diff-filter=d --cached --name-only)",
       "prettier --write --ignore-unknown"
     ]
-  }
+  },
+  "eslintIgnore": [
+    "**/*.css"
+  ]
 }
