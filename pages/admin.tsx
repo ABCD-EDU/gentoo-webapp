@@ -7,6 +7,7 @@ import TimelineContainer from "../components/TimelineContainer";
 import MoreInformation from "../components/MoreInformation";
 import ReportsTable from "../components/ReportsTable";
 import Dashboard from "../components/Dashboard";
+import UserSearch from "../components/UserSearch";
 import { UserReportsProps } from "../components/UserReports";
 
 const Timeline: NextPage = () => {
@@ -31,7 +32,10 @@ const Timeline: NextPage = () => {
         <Dashboard userTotal={"13613"} reportedPostTotal={"6235"} postTotal={"66236"} reportedUserTotal={"2366"}/>
         <ReportsTable className="mt-5" users={users}/>
       </TimelineContainer>
-      <MoreInformation />
+      <MoreInformation className="flex flex-col gap-1 p-4">
+        <UserSearch/>
+        <UserSearch/>
+      </MoreInformation>
     </div>
   );
 };
