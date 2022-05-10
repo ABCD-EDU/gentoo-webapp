@@ -1,12 +1,24 @@
 import { Button } from "@mui/material";
-import axios from "axios";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
-import { getAPIRoute } from "../../tags/apiRoutes";
+import {
+  ChangeEvent,
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
-const PostForm = () => {
+const PostForm = ({
+  content,
+  setContent,
+  submitPost,
+}: {
+  content: string;
+  setContent: Dispatch<SetStateAction<string>>;
+  submitPost: MouseEventHandler<HTMLButtonElement>;
+}) => {
   const [userPhoto, setUserPhoto] = useState<string>("");
-  const [content, setContent] = useState<string>("");
   const [rows, setRows] = useState<number>(1);
 
   const handleContentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,10 +44,6 @@ const PostForm = () => {
       setContent(newContent);
       setRows(rows);
     }
-  };
-
-  const submitPost = () => {
-    axios.post(`${getAPIRoute().SubmitPost}`);
   };
 
   useEffect(() => {
