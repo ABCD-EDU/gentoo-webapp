@@ -7,7 +7,7 @@ export interface UserReportsProps {
   userID: number;
   username: string;
   email: string;
-  photo?: string;
+  google_photo?: string;
   totalPosts: number;
   reports: number;
   hatePercent: number;
@@ -22,7 +22,7 @@ const UserReports: FC<UserReportsProps> = ({
   // userID,
   username,
   email,
-  photo,
+  google_photo,
   totalPosts,
   reports,
   hatePercent,
@@ -39,12 +39,13 @@ const UserReports: FC<UserReportsProps> = ({
       <div className={styles.imageAndUserInfoContainer}>
         {/*Image container*/}
         <div className={styles.imageContainer}>
-          {!photo || photo === "" ? (
+          {!google_photo || google_photo === "" ? (
             <div className="rounded-full w-[54px] h-[54px] bg-[#B1B1B1]" />
           ) : (
             <Image
               className="rounded-full"
-              src={photo}
+              loader={() => google_photo}
+              src={google_photo}
               width={54}
               height={54}
               layout={"fixed"}

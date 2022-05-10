@@ -1,8 +1,17 @@
 import UserReports, { UserReportsProps } from "../UserReports";
 import styles from "./ReportsTable.module.css";
+import { FC } from "react";
+
+interface ReportsTableProps {
+  className?: string;
+  users: any[];
+}
 
 // import { FC } from 'react'
-const ReportsTable = () => {
+const ReportsTable: FC<ReportsTableProps> = ({
+  className,
+  users
+}: ReportsTableProps) => {
   const userReport1 = {
     userID: 1,
     username: "hotdogasdfasdfas",
@@ -33,10 +42,10 @@ const ReportsTable = () => {
     genderPercent: 0.03,
   } as UserReportsProps;
 
-  const userReportsList = [userReport1, userReport2];
+  const userReportsList = users;
 
   return (
-    <div className={styles.mainContainer}>
+    <div className={styles.mainContainer + " " + `${className}`}>
       <div className={styles.headerContainer}>
         <div className={styles.userInfoHeader}>
           <p>User Information</p>
@@ -59,7 +68,7 @@ const ReportsTable = () => {
             userID={userReports.userID}
             username={userReports.username}
             email={userReports.email}
-            photo={userReports.photo}
+            google_photo={userReports.google_photo}
             totalPosts={userReports.totalPosts}
             reports={userReports.reports}
             hatePercent={userReports.hatePercent}
