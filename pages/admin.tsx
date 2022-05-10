@@ -28,7 +28,7 @@ const Timeline: NextPage = () => {
     <div className="flex flex-row justify-center">
       <Sidebar />
       <TimelineContainer heading={"Users Overview"}>
-        <Dashboard userTotal={"69"} reportedPostTotal={"69"} postTotal={"69"} reportedUserTotal={"69"}/>
+        <Dashboard userTotal={"13613"} reportedPostTotal={"6235"} postTotal={"66236"} reportedUserTotal={"2366"}/>
         <ReportsTable className="mt-5" users={users}/>
       </TimelineContainer>
       <MoreInformation />

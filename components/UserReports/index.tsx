@@ -10,12 +10,12 @@ export interface UserReportsProps {
   google_photo?: string;
   totalPosts: number;
   reports: number;
-  hatePercent: number;
-  notPercent: number;
-  prfnPercent: number;
-  racePercent: number;
-  religionPercent: number;
-  genderPercent: number;
+  hate_score: number;
+  normal_score: number;
+  profanity_score: number;
+  race_score: number;
+  religion_score: number;
+  sex_score: number;
 }
 
 const UserReports: FC<UserReportsProps> = ({
@@ -25,12 +25,12 @@ const UserReports: FC<UserReportsProps> = ({
   google_photo,
   totalPosts,
   reports,
-  hatePercent,
-  notPercent,
-  prfnPercent,
-  racePercent,
-  religionPercent,
-  genderPercent,
+  hate_score,
+  normal_score,
+  profanity_score,
+  race_score,
+  religion_score,
+  sex_score,
 }: UserReportsProps) => {
   return (
     // Main container
@@ -66,12 +66,12 @@ const UserReports: FC<UserReportsProps> = ({
       {/*Stats */}
       <div className={styles.statsContainer}>
         <p>{reports}</p>
-        <p>{Math.round(hatePercent * 100)}%</p>
-        <p>{Math.round(notPercent * 100)}%</p>
-        <p>{Math.round(prfnPercent * 100)}%</p>
-        <p>{Math.round(racePercent * 100)}%</p>
-        <p>{Math.round(religionPercent * 100)}%</p>
-        <p>{Math.round(genderPercent * 100)}%</p>
+        <p>{Math.round(hate_score * 100)}%</p>
+        <p>{Math.round(normal_score * 100)}%</p>
+        <p>{Math.round(profanity_score * 100)}%</p>
+        <p>{Math.round(race_score * 100)}%</p>
+        <p>{Math.round(religion_score * 100)}%</p>
+        <p>{Math.round(sex_score * 100)}%</p>
         <Button className={styles.Button} variant="contained">
           info
         </Button>
