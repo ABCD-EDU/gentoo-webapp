@@ -10,6 +10,7 @@ import Dashboard from "../components/Dashboard";
 import UserSearch from "../components/UserSearch";
 import { UserReportsProps } from "../components/UserReports";
 
+
 const Timeline: NextPage = () => {
   const [users, setUsers] = useState<UserReportsProps[]>([]);
   const router = useRouter();
@@ -25,6 +26,17 @@ const Timeline: NextPage = () => {
     });
   }, []);
 
+  const getUsersFromSearch = (user: any):any => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:8000/search-users/' + user,
+      responseType: 'stream',
+    }).then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+    });
+  }
+
   return (
     <div className="flex flex-row justify-center">
       <Sidebar />
@@ -33,8 +45,7 @@ const Timeline: NextPage = () => {
         <ReportsTable className="mt-5" users={users}/>
       </TimelineContainer>
       <MoreInformation className="flex flex-col gap-1 p-4">
-        <UserSearch/>
-        <UserSearch/>
+        <UserSearch searchFunction={getUsersFromSearch}/>
       </MoreInformation>
     </div>
   );
