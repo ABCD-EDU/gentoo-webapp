@@ -64,8 +64,8 @@ const ReportsTable: FC<ReportsTableProps> = ({
       <div className={styles.allStatsContainer}>
         {userReportsList.map((userReports) => (
           <UserReports
-            key={userReports.userID}
-            userID={userReports.userID}
+            key={userReports.user_id}
+            user_id={userReports.user_id}
             username={userReports.username}
             email={userReports.email}
             google_photo={userReports.google_photo}
