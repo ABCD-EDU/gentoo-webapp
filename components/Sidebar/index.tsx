@@ -46,14 +46,18 @@ const Sidebar: NextPage = () => {
 
   return (
     <div
-      className={`w-[340px] flex flex-col py-10 items-center justify-between h-[100vh]`}
+      className={`sticky top-0 w-[340px] flex flex-col py-10 items-center justify-between h-[100vh]`}
     >
       <div className="flex flex-col items-center">
         <Logo className="my-5" variant={LogoVariants.Photo} />
         <div className={`flex flex-col`}>
           {createLink("/home", "Home", "bx:home-smile")}
-          {createLink("/home", "Search", "akar-icons:search")}
-          {createLink("/home", "Profile", "ant-design:user-outlined")}
+          {createLink("/search", "Search", "akar-icons:search")}
+          {createLink(
+            `/profile/${userId}`,
+            "Profile",
+            "ant-design:user-outlined"
+          )}
         </div>
       </div>
       <Link href={`/profile/${userId}`}>
