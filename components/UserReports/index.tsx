@@ -4,7 +4,7 @@ import { Button, Tooltip } from "@mui/material";
 import styles from "./UserReports.module.css";
 
 export interface UserReportsProps {
-  userID: number;
+  user_id: number;
   username: string;
   email: string;
   google_photo?: string;
@@ -44,7 +44,9 @@ const UserReports: FC<UserReportsProps> = ({
           ) : (
             <Image
               className="rounded-full"
-              loader={() => google_photo}
+              loader={({ src, width, quality }) => {
+                return `${src}?w=${width}&q=${quality || 75}`
+              }}
               src={google_photo}
               width={54}
               height={54}
