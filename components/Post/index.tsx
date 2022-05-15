@@ -1,14 +1,17 @@
-import { Button } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { FC } from "react";
+import ScorePill from "../ScorePill";
 
 export interface PostProps {
   postId: string;
-  photo?: string;
+  photo: string;
   username: string;
   email: string;
   content: string;
+  createdOn: number;
+  isAdmin?: boolean;
+  hateScores?: object;
 }
 
 const Post: FC<PostProps> = ({
@@ -17,48 +20,62 @@ const Post: FC<PostProps> = ({
   username,
   email,
   content,
+  isAdmin = false,
+  hateScores,
 }: PostProps) => {
-  const router = useRouter();
-
-  const goToPost = () => {
-    router.push(`/post/${postId}`);
-  };
-
   return (
-    <Button
-      onClick={goToPost}
-      variant={"outlined"}
-      className={`text-left normal-case
-      border-t-[0px] border-l-[0px] border-r-[0px] border-[#808080]
-      hover:border-t-[0px] hover:border-l-[0px] hover:border-r-[0px] hover:border-[#808080]
-      `}
-      style={{ borderRadius: "0" }}
-    >
-      <div className="flex flex-row p-4 justify-between w-full break-words">
-        {!photo || photo === "" ? (
-          <div className="rounded-full w-[54px] h-[54px] bg-[#B1B1B1]" />
-        ) : (
-          <Image
-            className="rounded-full"
-            src={photo}
-            width={54}
-            height={54}
-            layout={"fixed"}
-            priority
-          />
-        )}
-
-        <div className="flex flex-col w-[88%] text-[15px]">
-          <div className={`flex flex-row items-start lowercase leading-none`}>
-            <p className={"text-[#FFFFFF] font-bold font-inter mr-5"}>
-              {username}
-            </p>
-            <p className={"text-[#B1B1B1] font-inter"}>{email}</p>
+    <Link href={`/post/${postId}`}>
+      <a
+        className={`
+        hover:bg-[#303742]
+        text-left normal-case
+        border-b-[1px] border-[#808080]
+        hover:border-t-[0px] hover:border-l-[0px] hover:border-r-[0px] hover:border-[#808080]
+        px-3 py-4
+    `}
+      >
+        <div>
+          <div
+            className="
+            float-left
+            rounded-full
+            overflow-hidden
+            w-[54px] h-[54px] min-w-[54px] min-h-[54px] max-w-[54px] max-h-[54px]"
+          >
+            {photo ? (
+              <Image src={photo} width={54} height={54} layout={"fixed"} />
+            ) : null}
           </div>
-          <p className={`font-inter text-white mt-1`}>{content}</p>
+          <div className="pl-[70px] w-full max-w-full">
+            <div>
+              <span className="mr-5 text-white font-inter text-md">
+                {username}
+              </span>
+              <span className="text-[#B1B1B1] font-inter text-sm">{email}</span>
+            </div>
+            <div className="w-full break-words">
+              <div className="font-inter text-white text-[15px] break-words">
+                {content}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </Button>
+        {hateScores && isAdmin ? (
+          <div className="flex flex-wrap w-full max-w-full mt-4 overflow-pre">
+            {Object.keys(hateScores).map((value) => (
+              <ScorePill
+                key={value}
+                className="mr-2"
+                label={value.split("_")[0]}
+                score={parseFloat(
+                  hateScores[value as keyof typeof hateScores]
+                ).toFixed(2)}
+              />
+            ))}
+          </div>
+        ) : null}
+      </a>
+    </Link>
   );
 };
 
