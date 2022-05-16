@@ -77,7 +77,7 @@ const PostSelected: NextPage = () => {
 
         {isAdmin ? <ScoresChart hateScores={hateScores} /> : null}
 
-        <div className="p-3 text-[#B1B1B1] font-inter hover:underline mt-2 border-y-[1px]">
+        <div className="p-3 border-[#808080] text-[#B1B1B1] font-inter hover:underline mt-2 border-y-[1px]">
           {new Date(createdOn).toUTCString()}
         </div>
       </TimelineContainer>
