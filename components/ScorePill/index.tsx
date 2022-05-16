@@ -2,10 +2,18 @@ import { FC } from "react";
 
 interface PillProps {
   label: string;
-  score: string | number | symbol;
+  score?: string | number | symbol;
+  minScore?: string | number | symbol;
+  maxScore?: string | number | symbol;
   className?: string;
 }
-const ScorePill: FC<PillProps> = ({ label, score, className }: PillProps) => {
+const ScorePill: FC<PillProps> = ({
+  label,
+  score,
+  minScore,
+  maxScore,
+  className,
+}: PillProps) => {
   const getColor = (label: string) => {
     switch (label) {
       case "hate":
@@ -38,7 +46,13 @@ const ScorePill: FC<PillProps> = ({ label, score, className }: PillProps) => {
       <span className="mr-1 drop-shadow-lg" style={{ color: getColor(label) }}>
         {label}:
       </span>
-      <span>{score.toString()}</span>
+      {score ? (
+        <span>{score.toString()}</span>
+      ) : minScore && maxScore ? (
+        <span>
+          {minScore.toString()}-{maxScore.toString()}
+        </span>
+      ) : null}
     </div>
   );
 };
