@@ -46,11 +46,14 @@ const ScorePill: FC<PillProps> = ({
       <span className="mr-1 drop-shadow-lg" style={{ color: getColor(label) }}>
         {label}:
       </span>
-      {score ? (
-        <span>{score.toString()}</span>
-      ) : minScore && maxScore ? (
+      {score || score !== undefined ? (
+        <span>{score.toString()}%</span>
+      ) : minScore !== undefined && maxScore !== undefined ? (
         <span>
-          {minScore.toString()}-{maxScore.toString()}
+          <span>{minScore.toString()}</span>
+          {"-"}
+          <span>{maxScore.toString()}</span>
+          {"%"}
         </span>
       ) : null}
     </div>
