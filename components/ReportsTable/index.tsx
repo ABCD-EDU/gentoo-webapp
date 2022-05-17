@@ -4,45 +4,38 @@ import { FC } from "react";
 
 interface ReportsTableProps {
   className?: string;
+  setSorting?: any;
+  sorting?: any;
   users: any[];
 }
 
 // import { FC } from 'react'
 const ReportsTable: FC<ReportsTableProps> = ({
   className,
-  users
+  users,
+  setSorting,
+  sorting
 }: ReportsTableProps) => {
-  // const userReport1 = {
-  //   userID: 1,
-  //   username: "hotdogasdfasdfas",
-  //   email: "hotdosdfasdfasdfg@mail.com",
-  //   photo: "",
-  //   totalPosts: 69,
-  //   reports: 13,
-  //   hate_score: 0.44,
-  //   normal_score: 0.22,
-  //   profanity_score: 0.33145,
-  //   racePercent: 0.6341,
-  //   religionPercent: 0.323,
-  //   genderPercent: 0.1353,
-  // } as UserReportsProps;
-
-  // const userReport2 = {
-  //   userID: 2,
-  //   username: "nice",
-  //   email: "nice@mail.com",
-  //   photo: "",
-  //   totalPosts: 6,
-  //   reports: 133,
-  //   hate_score: 0.04,
-  //   normal_score: 0.02,
-  //   profanity_score: 0.0335,
-  //   racePercent: 0.06,
-  //   religionPercent: 0.323,
-  //   genderPercent: 0.03,
-  // } as UserReportsProps;
 
   const userReportsList = users;
+
+  const onLabelClick = (label:string):any => {
+    let categ = sorting["category"]
+    let order = sorting["order"]
+
+    if (categ == label) {
+      if (order == "asc")
+        order = "desc"
+      else
+        order = "asc"
+    }else {
+      categ = label
+      order = "desc"
+    }
+    console.log(categ)
+    console.log(order)
+    setSorting({"category":categ, "order":order})
+  }
 
   return (
     <div className={styles.mainContainer + " " + `${className}`}>
@@ -51,13 +44,13 @@ const ReportsTable: FC<ReportsTableProps> = ({
           <p>User Information</p>
         </div>
         <div className={styles.statsHeader}>
-          <p>Reports</p>
-          <p>HATE</p>
-          <p>NOT</p>
-          <p>PRFN</p>
-          <p>RACE</p>
-          <p>REL</p>
-          <p>GEN</p>
+          <p onClick={() => onLabelClick("reports")}>Reports</p>
+          <p onClick={() => onLabelClick("hate")}>HATE</p>
+          <p onClick={() => onLabelClick("not")}>NOT</p>
+          <p onClick={() => onLabelClick("profanity")}>PRFN</p>
+          <p onClick={() => onLabelClick("race")}>RACE</p>
+          <p onClick={() => onLabelClick("religion")}>REL</p>
+          <p onClick={() => onLabelClick("sex")}>GEN</p>
           <p></p>
         </div>
       </div>

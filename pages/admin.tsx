@@ -15,6 +15,7 @@ const Timeline: NextPage = () => {
   const [users, setUsers] = useState<UserReportsProps[]>([]);
   const [filters, setFilters] = useState<FilterProp[]>([]);
   const [name, setName] = useState<string>("");
+  const [sorting, setSorting] = useState<any>({"category":"hate", "order":"desc"})
 
   useEffect(() => {
     onQueryChange()
@@ -26,13 +27,11 @@ const Timeline: NextPage = () => {
     //   console.log(res.data);
     //   setUsers(res.data);
     // });
-  }, [filters, name]);
+  }, [filters, name, sorting]);
 
   const onChangeName = (user: any): any => {
     console.log(user)
     setName(user)
-    // onQueryChange()
-    
   };
 
   const onQueryChange = () : any => {
@@ -41,7 +40,7 @@ const Timeline: NextPage = () => {
       data:JSON.stringify({
           name: name,
           filters: filters, 
-          sorting:{category: "Hate", order: "descending"},
+          sorting: sorting,
           pagination: {
             items:5,
             page:10
@@ -64,7 +63,7 @@ const Timeline: NextPage = () => {
           postTotal={"66236"}
           reportedUserTotal={"2366"}
         />
-        <ReportsTable className="mt-5" users={users} />
+        <ReportsTable className="mt-5" users={users} sorting={sorting} setSorting={setSorting}/>
       </TimelineContainer>
       <MoreInformation className="flex flex-col gap-1 p-4">
         <UserSearch searchFunction={onChangeName}/>
