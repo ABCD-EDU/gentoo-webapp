@@ -45,6 +45,7 @@
     ]
   },
   "eslintIgnore": [
-    "**/*.css"
+    "**/*.css",
+    "next.config.js"
   ]
 }

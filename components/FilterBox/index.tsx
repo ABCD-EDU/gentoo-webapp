@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import ScorePill from "../ScorePill";
+import FilterPill from "../FilterPill";
 
 const darkTheme = createTheme({
   palette: {
@@ -76,6 +76,7 @@ const FilterBox: FC<FilterBoxProps> = ({
 
       filters[index]["minScore"] = minValue;
       filters[index]["maxScore"] = maxValue;
+      setFilters([...filters]);
     } else {
       setFilters([
         ...filters,
@@ -121,7 +122,7 @@ const FilterBox: FC<FilterBoxProps> = ({
           <TextField
             type="number"
             onChange={handleMinValue}
-            value={minValue}
+            value={minValue <= 0 ? "" : minValue}
             label="Minimum"
             variant="outlined"
             size="small"
@@ -131,7 +132,7 @@ const FilterBox: FC<FilterBoxProps> = ({
           <TextField
             type="number"
             onChange={handleMaxValue}
-            value={maxValue}
+            value={maxValue <= 0 ? "" : maxValue}
             label="Maximum"
             variant="outlined"
             size="small"
@@ -152,12 +153,14 @@ const FilterBox: FC<FilterBoxProps> = ({
         {filters.length > 0 ? (
           <div className="flex flex-wrap w-full h-fit mt-2">
             {filters.map((values) => (
-              <ScorePill
+              <FilterPill
                 key={values["category"]}
                 className="mr-1"
                 minScore={values["minScore"]}
                 maxScore={values["maxScore"]}
                 label={values["category"]}
+                filters={filters}
+                setFilters={setFilters}
               />
             ))}
           </div>

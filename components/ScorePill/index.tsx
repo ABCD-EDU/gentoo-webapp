@@ -41,7 +41,7 @@ const ScorePill: FC<PillProps> = ({
 
   return (
     <div
-      className={`text-black shadow-lg hover:shadow-xl flex flex-row bg-white max-w-fit font-inter text-xs rounded-md px-2 py-1 mb-1 capitalize ${className}`}
+      className={`text-black shadow-lg hover:shadow-xl flex flex-row bg-white max-w-fit font-inter text-xs rounded-md px-2 py-1 capitalize ${className}`}
     >
       <span className="mr-1 drop-shadow-lg" style={{ color: getColor(label) }}>
         {label}:
@@ -49,7 +49,7 @@ const ScorePill: FC<PillProps> = ({
       {score || score !== undefined ? (
         <span>{score.toString()}%</span>
       ) : minScore !== undefined && maxScore !== undefined ? (
-        <span>
+        <span className="whitespace-nowrap">
           <span>{minScore.toString()}</span>
           {"-"}
           <span>{maxScore.toString()}</span>
