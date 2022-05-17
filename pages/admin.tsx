@@ -10,31 +10,49 @@ import UserSearch from "../components/UserSearch";
 import { UserReportsProps } from "../components/UserReports";
 import FilterBox, { FilterProp } from "../components/FilterBox";
 
+
 const Timeline: NextPage = () => {
   const [users, setUsers] = useState<UserReportsProps[]>([]);
   const [filters, setFilters] = useState<FilterProp[]>([]);
+  const [name, setName] = useState<string>("");
 
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:8000/get-users/5",
-      responseType: "stream",
-    }).then((res) => {
-      console.log(res.data);
-      setUsers(res.data);
-    });
-  }, []);
+    onQueryChange()
+    // axios({
+    //   method: "get",
+    //   url: "http://localhost:8000/get-users/5",
+    //   responseType: "stream",
+    // }).then((res) => {
+    //   console.log(res.data);
+    //   setUsers(res.data);
+    // });
+  }, [filters, name]);
 
-  const getUsersFromSearch = (user: any): any => {
-    axios({
-      method: "get",
-      url: "http://localhost:8000/search-users/" + user,
-      responseType: "stream",
-    }).then((res) => {
-      console.log(res.data);
-      setUsers(res.data);
-    });
+  const onChangeName = (user: any): any => {
+    console.log(user)
+    setName(user)
+    // onQueryChange()
+    
   };
+
+  const onQueryChange = () : any => {
+  
+    axios.post("http://localhost:8000/get-filtered-users/", {
+      data:JSON.stringify({
+          name: name,
+          filters: filters, 
+          sorting:{category: "Hate", order: "descending"},
+          pagination: {
+            items:5,
+            page:10
+          }
+        })
+    }).then((res) => {
+      setUsers(res.data)
+    })
+    console.log("Name:" + name)
+    console.log("Filters:" + filters)
+  }
 
   return (
     <div className="flex flex-row justify-center">
@@ -49,8 +67,8 @@ const Timeline: NextPage = () => {
         <ReportsTable className="mt-5" users={users} />
       </TimelineContainer>
       <MoreInformation className="flex flex-col gap-1 p-4">
-        <UserSearch searchFunction={getUsersFromSearch} />
-        <FilterBox filters={filters} setFilters={setFilters} />
+        <UserSearch searchFunction={onChangeName}/>
+        <FilterBox filters={filters} setFilters={setFilters}/>
       </MoreInformation>
     </div>
   );
