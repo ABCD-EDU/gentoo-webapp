@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,  } from "react";
 import TimelineContainer from "../components/TimelineContainer";
 import MoreInformation from "../components/MoreInformation";
 import ReportsTable from "../components/ReportsTable";
@@ -16,41 +16,48 @@ const Timeline: NextPage = () => {
   const [filters, setFilters] = useState<FilterProp[]>([]);
   const [name, setName] = useState<string>("");
   const [sorting, setSorting] = useState<any>({"category":"hate", "order":"desc"})
+  const [pagination, setPagination] = useState<any>({"offset":0, "limit":10});
 
   useEffect(() => {
     onQueryChange()
-    // axios({
-    //   method: "get",
-    //   url: "http://localhost:8000/get-users/5",
-    //   responseType: "stream",
-    // }).then((res) => {
-    //   console.log(res.data);
-    //   setUsers(res.data);
-    // });
   }, [filters, name, sorting]);
+
+  useEffect(() => {
+    if (users.length !=0 )
+      onPagination()
+  }, [pagination]);
 
   const onChangeName = (user: any): any => {
     console.log(user)
     setName(user)
   };
 
-  const onQueryChange = () : any => {
-  
+  const onPagination = () : any => {
     axios.post("http://localhost:8000/get-filtered-users/", {
       data:JSON.stringify({
           name: name,
           filters: filters, 
           sorting: sorting,
-          pagination: {
-            items:5,
-            page:10
-          }
+          pagination: pagination
+        })
+    }).then((res) => {
+      console.log("pagination")
+      const appended = users.concat(res.data)
+      setUsers(appended)
+    })
+  }
+
+  const onQueryChange = () : any => {
+    axios.post("http://localhost:8000/get-filtered-users/", {
+      data:JSON.stringify({
+          name: name,
+          filters: filters, 
+          sorting: sorting,
+          pagination: pagination
         })
     }).then((res) => {
       setUsers(res.data)
     })
-    console.log("Name:" + name)
-    console.log("Filters:" + filters)
   }
 
   return (
@@ -63,7 +70,14 @@ const Timeline: NextPage = () => {
           postTotal={"66236"}
           reportedUserTotal={"2366"}
         />
-        <ReportsTable className="mt-5" users={users} sorting={sorting} setSorting={setSorting}/>
+        <ReportsTable 
+          className="mt-5" 
+          users={users} 
+          sorting={sorting} 
+          setSorting={setSorting}
+          pagination={pagination}
+          setPagination={setPagination}
+        />
       </TimelineContainer>
       <MoreInformation className="flex flex-col gap-1 p-4">
         <UserSearch searchFunction={onChangeName}/>

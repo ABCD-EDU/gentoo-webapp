@@ -1,11 +1,14 @@
 import UserReports, { UserReportsProps } from "../UserReports";
 import styles from "./ReportsTable.module.css";
+import { Button } from "@mui/material";
 import { FC } from "react";
 
 interface ReportsTableProps {
   className?: string;
   setSorting?: any;
   sorting?: any;
+  pagination?: any;
+  setPagination?: any;
   users: any[];
 }
 
@@ -14,7 +17,9 @@ const ReportsTable: FC<ReportsTableProps> = ({
   className,
   users,
   setSorting,
-  sorting
+  sorting,
+  pagination,
+  setPagination
 }: ReportsTableProps) => {
 
   const userReportsList = users;
@@ -35,6 +40,11 @@ const ReportsTable: FC<ReportsTableProps> = ({
     console.log(categ)
     console.log(order)
     setSorting({"category":categ, "order":order})
+  }
+
+  const onLoadMore = ():any => {
+    let offset = pagination["offset"] + 10;
+    setPagination({"offset":offset, "limit":10})
   }
 
   return (
@@ -73,6 +83,9 @@ const ReportsTable: FC<ReportsTableProps> = ({
           />
         ))}
       </div>
+      <Button onClick={() => onLoadMore()} className="bg-white hover:shadow-lg hover:bg-white rounded-full capitalize text-lg w-contain my-2 mx-[250px] text-[#353B48]">
+        Load More
+      </Button>
       <div></div>
     </div>
   );
