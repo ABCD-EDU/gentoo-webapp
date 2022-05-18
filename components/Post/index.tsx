@@ -65,11 +65,11 @@ const Post: FC<PostProps> = ({
             {Object.keys(hateScores).map((value) => (
               <ScorePill
                 key={value}
-                className="mr-2"
+                className="mr-2 mb-1"
                 label={value.split("_")[0]}
-                score={parseFloat(
-                  hateScores[value as keyof typeof hateScores]
-                ).toFixed(2)}
+                score={Math.floor(
+                  parseFloat(hateScores[value as keyof typeof hateScores]) * 100
+                )}
               />
             ))}
           </div>

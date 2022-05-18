@@ -2,7 +2,7 @@ import { Tooltip } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 
 interface ChartProps {
-  hateScores: object[];
+  hateScores: object;
 }
 
 const ScoresChart: FC<ChartProps> = ({ hateScores }: ChartProps) => {
@@ -32,10 +32,13 @@ const ScoresChart: FC<ChartProps> = ({ hateScores }: ChartProps) => {
       {Object.keys(hateScores).map((value) => (
         <Tooltip
           key={value}
-          title={Number(hateScores[value as keyof typeof hateScores])}
+          className="capitalized"
+          title={`${formatLabel(value)}: ${(
+            parseFloat(hateScores[value as keyof typeof hateScores]) * 100
+          ).toFixed(2)}%`}
         >
-          <div className="hover:underline decoration-white rounded-md flex flex-row m-4 p-2 items-center">
-            <div className="capitalize drop-shadow-lg min-w-[120px] text-center font-inter text-white">
+          <div className="hover:underline decoration-white rounded-md flex flex-row m-2 p-2 items-center">
+            <div className="capitalize drop-shadow-lg min-w-[120px] text-right font-inter text-white">
               {formatLabel(value)}
             </div>
             <div

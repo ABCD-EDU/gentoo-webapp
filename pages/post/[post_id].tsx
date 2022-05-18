@@ -20,6 +20,15 @@ const PostSelected: NextPage = () => {
   const [hateScores, setHateScores] = useState<object[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+  const [authId, setAuthId] = useState<string>("");
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      setAuthId(userId);
+    }
+  });
+
   useEffect(() => {
     const { post_id } = router.query;
     if (post_id) {
@@ -28,10 +37,10 @@ const PostSelected: NextPage = () => {
   });
 
   useEffect(() => {
-    if (postId && postId !== "") {
+    if (postId && postId !== "" && authId && authId !== "") {
       axios
         .get(`${getAPIRoute().GetPost}`, {
-          params: { post_id: postId },
+          params: { post_id: postId, user_id: authId },
         })
         .then((res) => {
           console.log(res.data);
@@ -41,11 +50,11 @@ const PostSelected: NextPage = () => {
           setContent(res.data.post.post.post_info.content);
           setCreatedOn(res.data.post.post.post_info.created_on);
           setHateScores(res.data.post.hate_scores);
-          setIsAdmin(res.data.post.user.user_info.is_admin);
+          setIsAdmin(true);
         })
         .catch();
     }
-  }, [postId]);
+  }, [postId, authId]);
 
   return (
     <div className="flex flex-row justify-center">

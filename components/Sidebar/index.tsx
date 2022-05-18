@@ -5,12 +5,15 @@ import { Button } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Logo, { LogoVariants } from "../Logo";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { getAPIRoute } from "../../tags/apiRoutes";
 
 const Sidebar: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [photo, setPhoto] = useState<string>("");
   const [userId, setUserId] = useState<number>(0);
+  const [isAdmin, setAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     const _username = localStorage.getItem("username");
@@ -22,7 +25,20 @@ const Sidebar: NextPage = () => {
     setEmail(_email ? _email : "");
     setPhoto(_photo ? _photo : "");
     setUserId(_userId ? parseInt(_userId) : 0);
-  });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${getAPIRoute().UserInformation}`, {
+        params: {
+          user_id: userId,
+        },
+      })
+      .then((res) => {
+        setAdmin(res.data.user.is_admin);
+      })
+      .catch();
+  }, [userId]);
 
   const createLink = (path: string, name: string, icon: string) => {
     return (
@@ -58,6 +74,9 @@ const Sidebar: NextPage = () => {
             "Profile",
             "ant-design:user-outlined"
           )}
+          {isAdmin
+            ? createLink("/admin", "Reports", "tabler:report-search")
+            : null}
         </div>
       </div>
       <Link href={`/profile/${userId}`}>

@@ -7,11 +7,16 @@ import { getAPIRoute } from "../tags/apiRoutes";
 import TimelineContainer from "../components/TimelineContainer";
 import MoreInformation from "../components/MoreInformation";
 import PostForm from "../components/PostForm";
-import Post, { PostProps } from "../components/Post";
+import Post from "../components/Post";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Timeline: NextPage = () => {
-  const [posts, setPosts] = useState<PostProps[]>([]);
   const router = useRouter();
+  const [content, setContent] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+  const [posts, setPosts] = useState<[]>([]);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     axios
@@ -21,9 +26,11 @@ const Timeline: NextPage = () => {
           router.push("/");
         } else {
           axios
-            .get(getAPIRoute().UserInformation, { withCredentials: true })
+            .get(getAPIRoute().UserInformation, {
+              params: { user_id: res.data.user_id },
+            })
             .then((res) => {
-              const { can_post, created_on, user_id, user_info } =
+              const { can_post, is_admin, created_on, user_id, user_info } =
                 res.data.user;
               localStorage.setItem("email", user_info.email);
               localStorage.setItem("username", user_info.username);
@@ -32,30 +39,105 @@ const Timeline: NextPage = () => {
               localStorage.setItem("canPost", can_post);
               localStorage.setItem("createdOn", created_on);
               localStorage.setItem("userId", user_id);
+              setIsAdmin(is_admin);
+              setUserId(user_id);
             });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         router.push("/");
-        console.log(err);
       });
-  });
+  }, []);
+
+  useEffect(() => {
+    getPosts();
+  }, [userId]);
+
+  const getPosts = () => {
+    const authId = localStorage.getItem("userId");
+    if (userId && userId !== "" && authId) {
+      axios
+        .get(`${getAPIRoute().GetUserTimeline}`, {
+          params: {
+            user_id: userId,
+            auth_id: authId,
+            offset: posts.length,
+            limit: 10,
+          },
+        })
+        .then((res) => {
+          const newPosts: [] = res.data.posts;
+          setPosts((post) => [...post, ...newPosts]);
+          if (newPosts.length === 0) {
+            console.log(newPosts.length);
+            setHasMore(false);
+          }
+        })
+        .catch();
+    }
+  };
+
+  const submitPost = () => {
+    const post = {
+      user_id: userId,
+      content: content,
+      created_on: new Date().toISOString(),
+    };
+
+    axios
+      .post(`${getAPIRoute().SubmitPost}`, JSON.stringify(post), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        setContent("");
+        getPosts();
+      })
+      .catch();
+  };
 
   return (
     <div className="flex flex-row justify-center">
       <Sidebar />
-      <TimelineContainer heading={"Home"}>
-        <PostForm />
-        <Post
-          postId={"1"}
-          photo={""}
-          username={"arevalolance"}
-          email={"arevalolance@mail.com"}
-          content={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue posuere justo non fringilla. Praesent dictum lobortis mi ac sollicitudin. Donec commodo pulvinar turpis et eleifend. Aenean scelerisque purus arcu, et vehicula dui suscipit imperdiet."
-          }
-        />
-      </TimelineContainer>
+
+      <InfiniteScroll
+        className="overflow-"
+        dataLength={posts.length}
+        next={getPosts}
+        hasMore={hasMore}
+        loader={
+          <h4 className="text-center font-inter text-md text-[#b1b1b1]">
+            Loading...
+          </h4>
+        }
+        endMessage={
+          <h4 className="text-center font-inter text-md text-[#b1b1b1]">
+            Nothing more to show...
+          </h4>
+        }
+      >
+        <TimelineContainer heading={"Home"}>
+          <PostForm
+            submitPost={submitPost}
+            content={content}
+            setContent={setContent}
+          />
+          {posts.map((values) => (
+            <Post
+              key={values["post"]["post_id"]}
+              postId={values["post"]["post_id"]}
+              username={values["user"]["user_info"]["username"]}
+              email={values["user"]["user_info"]["email"]}
+              content={values["post"]["post_info"]["content"]}
+              createdOn={values["post"]["post_info"]["created_on"]}
+              hateScores={values["hate_scores"]}
+              isAdmin={isAdmin}
+              photo={values["user"]["user_info"]["google_photo"]}
+            />
+          ))}
+        </TimelineContainer>
+      </InfiniteScroll>
       <MoreInformation />
     </div>
   );
