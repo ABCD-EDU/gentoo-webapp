@@ -2,6 +2,7 @@ import { FC } from "react";
 import Image from "next/image";
 import { Button, Tooltip } from "@mui/material";
 import styles from "./UserReports.module.css";
+import { useRouter } from "next/router";
 
 export interface UserReportsProps {
   user_id: number;
@@ -19,7 +20,7 @@ export interface UserReportsProps {
 }
 
 const UserReports: FC<UserReportsProps> = ({
-  // userID,
+  user_id,
   username,
   email,
   google_photo,
@@ -32,6 +33,8 @@ const UserReports: FC<UserReportsProps> = ({
   religion_score,
   sex_score,
 }: UserReportsProps) => {
+  const router = useRouter();
+
   return (
     // Main container
     <div className={styles.mainContainer}>
@@ -74,12 +77,15 @@ const UserReports: FC<UserReportsProps> = ({
         <p>{Math.round(race_score * 100)}%</p>
         <p>{Math.round(religion_score * 100)}%</p>
         <p>{Math.round(sex_score * 100)}%</p>
-        <Button className={styles.Button} variant="contained">
+        <Button className={styles.Button} variant="contained" onClick={() => {
+          console.log("clicked " + user_id)
+          router.push("/profile/" + user_id); 
+        }}>
           info
         </Button>
       </div>
     </div>
   );
-};
+};33333
 
 export default UserReports;
