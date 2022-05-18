@@ -23,7 +23,7 @@ const Timeline: NextPage = () => {
   }, [filters, name, sorting]);
 
   useEffect(() => {
-    if (users.length !=0 )
+    if (pagination["offset"] !=0 )
       onPagination()
   }, [pagination]);
 
@@ -53,7 +53,7 @@ const Timeline: NextPage = () => {
           name: name,
           filters: filters, 
           sorting: sorting,
-          pagination: pagination
+          pagination: {"offset":0, "limit":10}
         })
     }).then((res) => {
       setUsers(res.data)

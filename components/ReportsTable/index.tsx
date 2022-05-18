@@ -56,7 +56,7 @@ const ReportsTable: FC<ReportsTableProps> = ({
         <div className={styles.statsHeader}>
           <p onClick={() => onLabelClick("reports")}>Reports</p>
           <p onClick={() => onLabelClick("hate")}>HATE</p>
-          <p onClick={() => onLabelClick("not")}>NOT</p>
+          <p onClick={() => onLabelClick("normal")}>NOT</p>
           <p onClick={() => onLabelClick("profanity")}>PRFN</p>
           <p onClick={() => onLabelClick("race")}>RACE</p>
           <p onClick={() => onLabelClick("religion")}>REL</p>
