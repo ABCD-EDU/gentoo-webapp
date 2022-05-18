@@ -17,8 +17,13 @@ const Timeline: NextPage = () => {
   const [name, setName] = useState<string>("");
   const [sorting, setSorting] = useState<any>({"category":"hate", "order":"desc"})
   const [pagination, setPagination] = useState<any>({"offset":0, "limit":10});
+  const [sysMetrics, setSysMetrics] = useState<any>({"totalUsers":0, "reportedUsers":0, 
+    "totalPosts":0, "reportedPosts":0})
 
   useEffect(() => {
+    if (users.length == 0) {
+      onLoadPage()
+    }
     onQueryChange()
   }, [filters, name, sorting]);
 
@@ -31,6 +36,13 @@ const Timeline: NextPage = () => {
     console.log(user)
     setName(user)
   };
+
+  const onLoadPage = () : any => {
+    axios.get(getAPIRoute().AdminEndPoint + "get-sysmetrics/")
+    .then((res) => {
+      setSysMetrics(res.data)
+    })
+  }
 
   const onPagination = () : any => {
     axios.post(getAPIRoute().AdminEndPoint + "get-filtered-users/", {
@@ -65,10 +77,10 @@ const Timeline: NextPage = () => {
       <Sidebar />
       <TimelineContainer heading={"Users Overview"}>
         <Dashboard
-          userTotal={"13613"}
-          reportedPostTotal={"6235"}
-          postTotal={"66236"}
-          reportedUserTotal={"2366"}
+          userTotal={sysMetrics["totalUsers"]}
+          reportedPostTotal={sysMetrics["reportedPosts"]}
+          postTotal={sysMetrics["totalPosts"]}
+          reportedUserTotal={sysMetrics["reportedUsers"]}
         />
         <ReportsTable 
           className="mt-5" 
