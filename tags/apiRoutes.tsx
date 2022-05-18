@@ -6,6 +6,7 @@ interface Routes {
   SubmitPost: string;
   GetUserTimeline: string;
   GetPost: string;
+  AdminEndPoint: string;
 }
 
 const BackendRoutes: Routes = {
@@ -16,6 +17,7 @@ const BackendRoutes: Routes = {
   SubmitPost: "http://localhost:8002/v1/submit-post",
   GetUserTimeline: "http://localhost:8002/v1/user-timeline",
   GetPost: "http://localhost:8002/v1/post",
+  AdminEndPoint: "http://localhost:8005/",
 };
 
 export const getAPIRoute = () => {

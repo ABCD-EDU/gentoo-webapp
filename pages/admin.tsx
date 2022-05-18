@@ -9,7 +9,7 @@ import Dashboard from "../components/Dashboard";
 import UserSearch from "../components/UserSearch";
 import { UserReportsProps } from "../components/UserReports";
 import FilterBox, { FilterProp } from "../components/FilterBox";
-
+import { getAPIRoute } from "../tags/apiRoutes";
 
 const Timeline: NextPage = () => {
   const [users, setUsers] = useState<UserReportsProps[]>([]);
@@ -33,7 +33,7 @@ const Timeline: NextPage = () => {
   };
 
   const onPagination = () : any => {
-    axios.post("http://localhost:8000/get-filtered-users/", {
+    axios.post(getAPIRoute().AdminEndPoint + "get-filtered-users/", {
       data:JSON.stringify({
           name: name,
           filters: filters, 
@@ -48,7 +48,7 @@ const Timeline: NextPage = () => {
   }
 
   const onQueryChange = () : any => {
-    axios.post("http://localhost:8000/get-filtered-users/", {
+    axios.post(getAPIRoute().AdminEndPoint + "get-filtered-users/", {
       data:JSON.stringify({
           name: name,
           filters: filters, 
