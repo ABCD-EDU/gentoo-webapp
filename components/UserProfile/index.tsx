@@ -25,7 +25,6 @@ const UserProfile: FC<UserProps> = ({
 }: UserProps) => {
   const [following, setFollowing] = useState<number>(0);
   const [followers, setFollowers] = useState<number>(0);
-  // const [userRating, setUserRating] = useState<number>(0);
 
   useEffect(() => {
     axios
@@ -61,15 +60,6 @@ const UserProfile: FC<UserProps> = ({
             </span>
             <span className="font-inter text-[#B1B1B1] text-sm">{email}</span>
           </div>
-          {/* <Button
-            className="font-inter font-bold capitalize rounded-full shadow-sm hover:shadow-lg px-4 py-0"
-            style={{
-              backgroundColor: "#353B48",
-              color: "white",
-            }}
-          >
-            Edit Profile
-          </Button> */}
         </div>
       </div>
       <div className="ml-[150px] mt-5 font-inter text-white">{description}</div>
@@ -90,13 +80,6 @@ const UserProfile: FC<UserProps> = ({
           </span>
           <span className="font-inter text-[#B1B1B1] text-lg">Followers</span>
         </div>
-
-        {/* <div className="border-b-[1px] border-[#2F3640] hover:border-[#B1B1B1] hover:cursor-pointer">
-          <span className="font-bold font-inter text-white text-lg mr-1">
-            {userRating}%
-          </span>
-          <span className="font-inter text-[#B1B1B1] text-lg">User Rating</span>
-        </div> */}
       </div>
       <div className="py-2 mt-2 text-center border-[#b1b1b1] border-b-[1px] hover:bg-[#38404B] hover:cursor-pointer">
         <span className="font-bold font-inter text-xl text-white">Posts</span>

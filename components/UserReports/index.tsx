@@ -48,7 +48,7 @@ const UserReports: FC<UserReportsProps> = ({
             <Image
               className="rounded-full"
               loader={({ src, width, quality }) => {
-                return `${src}?w=${width}&q=${quality || 75}`
+                return `${src}?w=${width}&q=${quality || 75}`;
               }}
               src={google_photo}
               width={54}
@@ -77,15 +77,19 @@ const UserReports: FC<UserReportsProps> = ({
         <p>{Math.round(race_score * 100)}%</p>
         <p>{Math.round(religion_score * 100)}%</p>
         <p>{Math.round(sex_score * 100)}%</p>
-        <Button className={styles.Button} variant="contained" onClick={() => {
-          console.log("clicked " + user_id)
-          router.push("/profile/" + user_id); 
-        }}>
-          info
+        <Button
+          className={styles.Button}
+          variant="contained"
+          onClick={() => {
+            console.log("clicked " + user_id);
+            router.push("/profile/" + user_id);
+          }}
+        >
+          Profile
         </Button>
       </div>
     </div>
   );
-};33333
+};
 
 export default UserReports;

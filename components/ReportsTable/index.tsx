@@ -79,12 +79,14 @@ const ReportsTable: FC<ReportsTableProps> = ({
           />
         ))}
       </div>
-      <Button
-        onClick={() => onLoadMore()}
-        className="bg-white hover:shadow-lg hover:bg-white rounded-full capitalize text-lg w-contain my-2 mx-[250px] text-[#353B48]"
-      >
-        Load More
-      </Button>
+      {userReportsList.length > 0 ? (
+        <Button
+          onClick={() => onLoadMore()}
+          className="bg-white hover:shadow-lg hover:bg-white rounded-full capitalize text-lg w-contain my-2 mx-[250px] text-[#353B48]"
+        >
+          Load More
+        </Button>
+      ) : null}
     </div>
   );
 };
