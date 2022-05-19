@@ -64,7 +64,7 @@ const Timeline: NextPage = () => {
   const getPosts = () => {
     const authId = localStorage.getItem("userId");
     if (userId && userId !== "" && authId) {
-      console.log(hateFilter);
+      console.log(posts.length);
       axios
         .get(`${getAPIRoute().GetUserTimeline}`, {
           params: {
@@ -102,7 +102,7 @@ const Timeline: NextPage = () => {
       })
       .then(() => {
         setContent("");
-        getPosts();
+        router.reload(window.location.pathname);
       })
       .catch();
   };
