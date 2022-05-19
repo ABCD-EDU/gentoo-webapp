@@ -32,11 +32,9 @@ const Search: NextPage = () => {
         .then((res) => {
           const results: [] = res.data.users;
           setSearched(query);
-          if (results) {
-            setQueryResults((result) => [...result, ...results]);
-            if (results.length === 0) {
-              setHasMore(false);
-            }
+          setQueryResults((result) => [...result, ...results]);
+          if (results.length === 0) {
+            setHasMore(false);
           }
         });
     }
