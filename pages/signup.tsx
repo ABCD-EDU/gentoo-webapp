@@ -52,12 +52,9 @@ const Home: NextPage = () => {
       username: username,
       google_photo: googlePhoto,
       description: about,
-      birthdate: {
-        day: day,
-        month: month,
-        year: year,
-      },
     };
+
+    console.log(day, month, year);
 
     axios
       .post(`${getAPIRoute().SignUp}`, JSON.stringify(info), {

@@ -12,6 +12,7 @@ interface UserProps {
   isAdmin: boolean;
   username: string;
   hateScores: object;
+  isAdminViewing: boolean;
 }
 
 const UserProfile: FC<UserProps> = ({
@@ -22,6 +23,7 @@ const UserProfile: FC<UserProps> = ({
   isAdmin,
   username,
   hateScores,
+  isAdminViewing,
 }: UserProps) => {
   const [following, setFollowing] = useState<number>(0);
   const [followers, setFollowers] = useState<number>(0);
@@ -64,7 +66,7 @@ const UserProfile: FC<UserProps> = ({
       </div>
       <div className="ml-[150px] mt-5 font-inter text-white">{description}</div>
 
-      <ScoresChart hateScores={hateScores} />
+      {isAdminViewing ? <ScoresChart hateScores={hateScores} /> : null}
 
       <div className="flex flex-row justify-between px-20 mt-5">
         <div className="mr-5 border-b-[1px] border-[#2F3640] hover:border-[#B1B1B1] hover:cursor-pointer">

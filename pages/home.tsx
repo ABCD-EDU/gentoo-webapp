@@ -40,6 +40,7 @@ const Timeline: NextPage = () => {
             .then((res) => {
               const { can_post, is_admin, created_on, user_id, user_info } =
                 res.data.user;
+              console.log("iofajwieofjweioafjawe", res.data);
               localStorage.setItem("email", user_info.email);
               localStorage.setItem("username", user_info.username);
               localStorage.setItem("description", user_info.description);
@@ -47,6 +48,7 @@ const Timeline: NextPage = () => {
               localStorage.setItem("canPost", can_post);
               localStorage.setItem("createdOn", created_on);
               localStorage.setItem("userId", user_id);
+              localStorage.setItem("isAdmin", is_admin);
               setIsAdmin(is_admin);
               setUserId(user_id);
             });
@@ -70,12 +72,13 @@ const Timeline: NextPage = () => {
           params: {
             user_id: userId,
             auth_id: authId,
-            offset: posts.length,
+            offset: posts.length + 10,
             limit: 10,
-            hate_filter: hateFilter,
+            hate_filter: hateFilter === 0 ? 1 : hateFilter,
           },
         })
         .then((res) => {
+          console.log(res.data.posts);
           const newPosts: [] = res.data.posts;
           setPosts((post) => [...post, ...newPosts]);
 
@@ -102,7 +105,7 @@ const Timeline: NextPage = () => {
       })
       .then(() => {
         setContent("");
-        router.reload(window.location.pathname);
+        router.reload();
       })
       .catch();
   };

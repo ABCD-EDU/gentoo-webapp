@@ -24,6 +24,55 @@ const Timeline: NextPage = () => {
   const [isAdminViewing, setAdminView] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [hateFilter, setHateFilter] = useState<number>(0);
+  const [follow, setFollow] = useState<boolean>(false);
+
+  const followUser = () => {
+    const authId = localStorage.getItem("userId");
+    if (authId) {
+      axios
+        .post(
+          `${getAPIRoute().FollowUser}`,
+          JSON.stringify({
+            follower_id: authId,
+            followed_id: userId,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(() => {
+          console.log("followed!", userId);
+          setFollow(true);
+        })
+        .catch();
+    }
+  };
+
+  const unfollowUser = () => {
+    const authId = localStorage.getItem("userId");
+    if (authId) {
+      axios
+        .post(
+          `${getAPIRoute().UnfollowUser}`,
+          JSON.stringify({
+            follower_id: authId,
+            followed_id: userId,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(() => {
+          console.log("unfollowed!", userId);
+          setFollow(false);
+        })
+        .catch();
+    }
+  };
 
   useEffect(() => {
     const localHateFilter = localStorage.getItem("hateFilter");
@@ -100,8 +149,12 @@ const Timeline: NextPage = () => {
         .get(`${getAPIRoute().UserInformation}`, {
           params: { user_id: authId },
         })
-        .then((res) => {
-          setAdminView(res.data.user.is_admin);
+        .then(() => {
+          const localAdmin = localStorage.getItem("isAdmin");
+          if (localAdmin) {
+            console.log(localAdmin === "true");
+            setAdminView(localAdmin === "true");
+          }
         });
     }
   }, [router]);
@@ -209,17 +262,27 @@ const Timeline: NextPage = () => {
             </div>
             <div className="flex flex-row">
               <Button
-                onClick={muteUser}
-                className="capitalize font-bold text-lg font-inter text-white bg-[#353B48] rounded-full shadow-md w-[80px] mr-2"
+                onClick={follow ? unfollowUser : followUser}
+                className="capitalize font-bold text-lg font-inter text-black bg-white rounded-full shadow-md w-[80px] mr-2"
               >
-                Mute
+                Follow
               </Button>
-              <Button
-                onClick={banUser}
-                className="capitalize font-bold text-lg font-inter text-[#FF3D00] bg-[#353B48] rounded-full shadow-md w-[80px]"
-              >
-                Ban
-              </Button>
+              {isAdminViewing ? (
+                <>
+                  <Button
+                    onClick={muteUser}
+                    className="capitalize font-bold text-lg font-inter text-white bg-[#353B48] rounded-full shadow-md w-[80px] mr-2"
+                  >
+                    Mute
+                  </Button>
+                  <Button
+                    onClick={banUser}
+                    className="capitalize font-bold text-lg font-inter text-[#FF3D00] bg-[#353B48] rounded-full shadow-md w-[80px]"
+                  >
+                    Ban
+                  </Button>
+                </>
+              ) : null}
             </div>
           </div>
           {userId && userId !== "" ? (
@@ -232,6 +295,7 @@ const Timeline: NextPage = () => {
                 photo={photo}
                 isAdmin={isAdmin}
                 username={username}
+                isAdminViewing={isAdminViewing}
               />
               {posts.map((values) => (
                 <Post
