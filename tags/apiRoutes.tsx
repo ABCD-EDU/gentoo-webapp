@@ -15,6 +15,7 @@ interface Routes {
   Search: string;
   FollowUser: string;
   UnfollowUser: string;
+  CheckFollowing: string;
 }
 
 const BackendRoutes: Routes = {
@@ -34,6 +35,7 @@ const BackendRoutes: Routes = {
   Search: "http://localhost:8003/v1/search",
   FollowUser: "http://localhost:8003/v1/follow",
   UnfollowUser: "http://localhost:8003/v1/unfollow",
+  CheckFollowing: "http://localhost:8003/v1/check",
 };
 
 export const getAPIRoute = () => {
