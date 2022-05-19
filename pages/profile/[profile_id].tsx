@@ -146,6 +146,23 @@ const Timeline: NextPage = () => {
     const authId = localStorage.getItem("userId");
     if (authId) {
       axios
+        .get(`http://localhost:8003/follow-check`, {
+          params: {
+            user_id: authId,
+            following_id: userId,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch();
+    }
+  });
+
+  useEffect(() => {
+    const authId = localStorage.getItem("userId");
+    if (authId) {
+      axios
         .get(`${getAPIRoute().UserInformation}`, {
           params: { user_id: authId },
         })
@@ -263,9 +280,9 @@ const Timeline: NextPage = () => {
             <div className="flex flex-row">
               <Button
                 onClick={follow ? unfollowUser : followUser}
-                className="capitalize font-bold text-lg font-inter text-black bg-white rounded-full shadow-md w-[80px] mr-2"
+                className="capitalize font-bold text-lg font-inter text-black hover:bg-white bg-white rounded-full shadow-md w-[80px] mr-2"
               >
-                Follow
+                {follow ? "Unfollow" : "Follow"}
               </Button>
               {isAdminViewing ? (
                 <>

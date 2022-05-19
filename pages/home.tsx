@@ -72,13 +72,13 @@ const Timeline: NextPage = () => {
           params: {
             user_id: userId,
             auth_id: authId,
-            offset: posts.length + 10,
+            offset: posts.length,
             limit: 10,
             hate_filter: hateFilter === 0 ? 1 : hateFilter,
           },
         })
         .then((res) => {
-          console.log(res.data.posts);
+          console.log(hateFilter, res.data.posts);
           const newPosts: [] = res.data.posts;
           setPosts((post) => [...post, ...newPosts]);
 
