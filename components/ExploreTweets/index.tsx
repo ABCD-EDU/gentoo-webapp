@@ -38,6 +38,7 @@ const ExploreTweets = ({ isAdmin }: { isAdmin: boolean }) => {
 
       {posts.map((values) => (
         <Post
+          posterId={values["user"]["user_id"]}
           photo={values["user"]["user_info"]["google_photo"]}
           key={values["post"]["post_id"]}
           postId={values["post"]["post_id"]}
