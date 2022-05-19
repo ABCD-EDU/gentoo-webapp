@@ -13,7 +13,7 @@ const TimelineContainer: FC<ContainerProps> = ({
 }: ContainerProps) => {
   return (
     <div
-      className={`flex flex-col whitespace-pre-wrap w-[850px] border-[#808080] border-r-[1px] border-l-[1px] ${className}`}
+      className={`flex flex-col whitespace-pre-wrap h-[100vh] w-[850px] border-[#808080] border-r-[1px] border-l-[1px] ${className}`}
     >
       {heading ? (
         <span className="font-bold font-Inter text-[1.7rem] text-white mt-3 h-fit w-[100%] px-5">

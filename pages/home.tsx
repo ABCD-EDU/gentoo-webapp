@@ -120,11 +120,7 @@ const Timeline: NextPage = () => {
         next={getPosts}
         hasMore={hasMore}
         loader={<></>}
-        endMessage={
-          <h4 className="text-center font-inter text-md text-[#b1b1b1]">
-            Nothing more to show...
-          </h4>
-        }
+        endMessage={<></>}
       >
         <TimelineContainer heading={"Home"}>
           <PostForm

@@ -261,11 +261,7 @@ const Timeline: NextPage = () => {
             Loading...
           </h4>
         }
-        endMessage={
-          <h4 className="text-center font-inter text-md text-[#b1b1b1]">
-            Nothing more to show...
-          </h4>
-        }
+        endMessage={<></>}
       >
         <TimelineContainer>
           <div className="flex flex-row items-center justify-between pr-5">
