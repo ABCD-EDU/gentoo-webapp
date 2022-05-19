@@ -29,6 +29,7 @@ const ExploreTweets = ({ isAdmin }: { isAdmin: boolean }) => {
           params: { user_id: userId, auth_id: authId, hate_filter: hateFilter },
         })
         .then((res) => {
+          console.log(hateFilter, res.data);
           setPosts(res.data.posts);
         });
     }

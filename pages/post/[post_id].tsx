@@ -51,6 +51,13 @@ const PostSelected: NextPage = () => {
   });
 
   useEffect(() => {
+    const localAdmin = localStorage.getItem("isAdmin");
+    if (localAdmin) {
+      setIsAdmin(localAdmin === "true");
+    }
+  });
+
+  useEffect(() => {
     if (postId && postId !== "" && authId && authId !== "") {
       axios
         .get(`${getAPIRoute().GetPost}`, {
@@ -64,7 +71,6 @@ const PostSelected: NextPage = () => {
           setContent(res.data.post.post.post_info.content);
           setCreatedOn(res.data.post.post.post_info.created_on);
           setHateScores(res.data.post.hate_scores);
-          setIsAdmin(true);
         })
         .catch();
     }
