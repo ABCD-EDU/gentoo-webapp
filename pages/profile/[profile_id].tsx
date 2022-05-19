@@ -23,6 +23,14 @@ const Timeline: NextPage = () => {
   const [hateScores, setHateScores] = useState<object>([]);
   const [isAdminViewing, setAdminView] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hateFilter, setHateFilter] = useState<number>(0);
+
+  useEffect(() => {
+    const localHateFilter = localStorage.getItem("hateFilter");
+    if (localHateFilter) {
+      setHateFilter(parseInt(localHateFilter) / 100);
+    }
+  }, []);
 
   const muteUser = () => {
     axios
@@ -108,6 +116,7 @@ const Timeline: NextPage = () => {
             auth_id: authId,
             offset: posts.length,
             limit: 10,
+            hate_filter: userId === authId ? 1 : hateFilter,
           },
         })
         .then((res) => {

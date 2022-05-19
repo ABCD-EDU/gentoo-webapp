@@ -17,6 +17,14 @@ const Timeline: NextPage = () => {
   const [posts, setPosts] = useState<[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hateFilter, setHateFilter] = useState<number>(0);
+
+  useEffect(() => {
+    const localHateFilter = localStorage.getItem("hateFilter");
+    if (localHateFilter) {
+      setHateFilter(parseInt(localHateFilter) / 100);
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -56,6 +64,7 @@ const Timeline: NextPage = () => {
   const getPosts = () => {
     const authId = localStorage.getItem("userId");
     if (userId && userId !== "" && authId) {
+      console.log(hateFilter);
       axios
         .get(`${getAPIRoute().GetUserTimeline}`, {
           params: {
@@ -63,13 +72,14 @@ const Timeline: NextPage = () => {
             auth_id: authId,
             offset: posts.length,
             limit: 10,
+            hate_filter: hateFilter,
           },
         })
         .then((res) => {
           const newPosts: [] = res.data.posts;
           setPosts((post) => [...post, ...newPosts]);
+
           if (newPosts.length === 0) {
-            console.log(newPosts.length);
             setHasMore(false);
           }
         })
@@ -106,11 +116,7 @@ const Timeline: NextPage = () => {
         dataLength={posts.length}
         next={getPosts}
         hasMore={hasMore}
-        loader={
-          <h4 className="text-center font-inter text-md text-[#b1b1b1]">
-            Loading...
-          </h4>
-        }
+        loader={<></>}
         endMessage={
           <h4 className="text-center font-inter text-md text-[#b1b1b1]">
             Nothing more to show...
@@ -125,6 +131,7 @@ const Timeline: NextPage = () => {
           />
           {posts.map((values) => (
             <Post
+              photo={values["user"]["user_info"]["google_photo"]}
               key={values["post"]["post_id"]}
               postId={values["post"]["post_id"]}
               username={values["user"]["user_info"]["username"]}
@@ -133,7 +140,6 @@ const Timeline: NextPage = () => {
               createdOn={values["post"]["post_info"]["created_on"]}
               hateScores={values["hate_scores"]}
               isAdmin={isAdmin}
-              photo={values["user"]["user_info"]["google_photo"]}
             />
           ))}
         </TimelineContainer>

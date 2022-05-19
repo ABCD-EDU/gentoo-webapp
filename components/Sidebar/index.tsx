@@ -74,6 +74,7 @@ const Sidebar: NextPage = () => {
             "Profile",
             "ant-design:user-outlined"
           )}
+          {createLink(`/settings`, "Settings", "ci:settings")}
           {isAdmin
             ? createLink("/admin", "Reports", "tabler:report-search")
             : null}
