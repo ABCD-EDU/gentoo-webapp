@@ -7,6 +7,14 @@ import Post from "../Post";
 const ExploreTweets = ({ isAdmin }: { isAdmin: boolean }) => {
   const [userId, setUserId] = useState<string>("");
   const [posts, setPosts] = useState<[]>([]);
+  const [hateFilter, setHateFilter] = useState<number>(0);
+
+  useEffect(() => {
+    const localHateFilter = localStorage.getItem("hateFilter");
+    if (localHateFilter) {
+      setHateFilter(parseInt(localHateFilter) / 100);
+    }
+  }, []);
 
   useEffect(() => {
     const storageId = localStorage.getItem("userId");
@@ -18,7 +26,7 @@ const ExploreTweets = ({ isAdmin }: { isAdmin: boolean }) => {
     if (userId && userId !== "") {
       axios
         .get(`${getAPIRoute().GetLatestPosts}`, {
-          params: { user_id: userId, auth_id: authId },
+          params: { user_id: userId, auth_id: authId, hate_filter: hateFilter },
         })
         .then((res) => {
           setPosts(res.data.posts);

@@ -16,14 +16,6 @@ const Search: NextPage = () => {
   const [queryResults, setQueryResults] = useState<[]>([]);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [hateFilter, setHateFilter] = useState<number>(0);
-
-  useEffect(() => {
-    const localHateFilter = localStorage.getItem("hateFilter");
-    if (localHateFilter) {
-      setHateFilter(parseInt(localHateFilter));
-    }
-  }, []);
 
   const searchQuery = () => {
     const userId = localStorage.getItem("userId");
@@ -35,7 +27,6 @@ const Search: NextPage = () => {
             user_id: userId,
             offset: queryResults.length,
             limit: 10,
-            hate_filter: hateFilter,
           },
         })
         .then((res) => {
