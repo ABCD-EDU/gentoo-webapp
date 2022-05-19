@@ -48,11 +48,12 @@ const Post: FC<PostProps> = ({
         px-3 py-4
         hover:bg-[#303742]
         text-left normal-case
+        w-full
         `}
       >
         <Link href={`/post/${postId}`}>
-          <a>
-            <div className="flex flex-row">
+          <a className="flex w-full">
+            <div className="flex flex-row w-full">
               <div
                 className="
             float-left
