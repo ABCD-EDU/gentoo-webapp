@@ -1,5 +1,10 @@
 # gentoo-webapp
 
+## Project Preview:
+![Slide1](https://user-images.githubusercontent.com/90618180/235821329-f980e1b6-447f-4e41-94b3-fff3b3d6c6e7.PNG)
+![Slide2](https://user-images.githubusercontent.com/90618180/235821332-5567ef60-a0bf-4d33-b292-9711c659e390.PNG)
+![Slide3](https://user-images.githubusercontent.com/90618180/235821336-0aa03299-4bd4-4ed0-9603-b6f762c00dda.PNG)
+
 ## Github Repositories for the application's backend microservices:
 https://github.com/ABCD-EDU/hate-speech-backend
 
